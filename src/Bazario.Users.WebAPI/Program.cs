@@ -1,5 +1,6 @@
 using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
+using Bazario.Users.Infrastructure.Extensions;
 
 namespace Bazario.Users.WebAPI
 {
@@ -23,6 +24,8 @@ namespace Bazario.Users.WebAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.ApplyMigrations();
 
             app.UseAuthorization();
 
