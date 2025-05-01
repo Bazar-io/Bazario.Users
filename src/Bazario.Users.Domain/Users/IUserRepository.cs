@@ -3,22 +3,18 @@
     public interface IUserRepository
     {
         Task<User?> GetByIdAsync(
-            UserId id,
+            UserId userId,
             CancellationToken cancellationToken = default);
 
         Task<IEnumerable<User>> GetAllAdminsAsync(
             CancellationToken cancellationToken = default);
 
-        Task<int> InsertAsync(
+        Task InsertAsync(
             User user,
             CancellationToken cancellationToken = default);
 
-        Task<int> UpdateAsync(
-            User user,
-            CancellationToken cancellationToken = default);
+        Task UpdateAsync(User user);
 
-        Task<int> DeleteAsync(
-            User user,
-            CancellationToken cancellationToken = default);
+        Task DeleteAsync(User user);
     }
 }
