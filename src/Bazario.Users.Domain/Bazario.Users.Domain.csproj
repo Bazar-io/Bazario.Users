@@ -11,8 +11,4 @@
     <PackageReference Include="Bazario.AspNetCore.Shared.Results" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Users\LastNames\" />
-  </ItemGroup>
-
 </Project>

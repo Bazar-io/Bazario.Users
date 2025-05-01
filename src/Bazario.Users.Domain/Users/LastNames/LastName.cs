@@ -1,15 +1,16 @@
 ﻿using Bazario.AspNetCore.Shared.Domain;
 using Bazario.AspNetCore.Shared.Results;
+using Bazario.Users.Domain.Users.FirstNames;
 using System.Text.RegularExpressions;
 
-namespace Bazario.Users.Domain.Users.FirstNames
+namespace Bazario.Users.Domain.Users.LastNames
 {
-    public sealed class FirstName : ValueObject
+    public sealed class LastName : ValueObject
     {
         public const int MinLength = 2;
         public const int MaxLength = 30;
 
-        private FirstName(string value)
+        private LastName(string value)
         {
             Value = value;
         }
@@ -21,16 +22,16 @@ namespace Bazario.Users.Domain.Users.FirstNames
             yield return Value;
         }
 
-        public static Result<FirstName> Create(string? value)
+        public static Result<LastName> Create(string? value)
         {
             var validationResult = ValidateInputValue(value);
 
             if (validationResult.IsFailure)
             {
-                return Result.Failure<FirstName>(validationResult.Error);
+                return Result.Failure<LastName>(validationResult.Error);
             }
 
-            return new FirstName(value!);
+            return new LastName(value!);
         }
 
         private static Result ValidateInputValue(string? value)
@@ -43,13 +44,13 @@ namespace Bazario.Users.Domain.Users.FirstNames
             if (value.Length < MinLength)
             {
                 return Result.Failure(
-                    FirstNameErrors.TooShort(minLength: MinLength));
+                    LastNameErrors.TooShort(minLength: MinLength));
             }
 
             if (value.Length > MaxLength)
             {
                 return Result.Failure(
-                    FirstNameErrors.TooLong(maxLength: MaxLength));
+                    LastNameErrors.TooLong(maxLength: MaxLength));
             }
 
             var formatResult = ValidateFormat(value);
@@ -68,7 +69,7 @@ namespace Bazario.Users.Domain.Users.FirstNames
 
             if (!Regex.IsMatch(value, pattern))
             {
-                return Result.Failure(FirstNameErrors.InvalidFormat);
+                return Result.Failure(LastNameErrors.InvalidFormat);
             }
 
             return Result.Success();
