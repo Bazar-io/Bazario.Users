@@ -1,6 +1,7 @@
 using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
+using Bazario.Users.WebAPI.Factories;
 
 namespace Bazario.Users.WebAPI
 {
@@ -17,6 +18,10 @@ namespace Bazario.Users.WebAPI
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddSingleton<ProblemDetailsFactory>();
 
             var app = builder.Build();
 
