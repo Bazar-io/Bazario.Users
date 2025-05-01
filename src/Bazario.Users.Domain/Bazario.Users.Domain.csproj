@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Bazario.AspNetCore.Shared.Domain" Version="1.0.1" />
+    <PackageReference Include="Bazario.AspNetCore.Shared.Results" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>
