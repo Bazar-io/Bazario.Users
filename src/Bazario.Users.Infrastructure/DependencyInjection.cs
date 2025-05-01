@@ -8,6 +8,10 @@ namespace Bazario.Users.Infrastructure
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services)
         {
+            services.AddAppOptions();
+
+            services.AddPersistence();
+
             services.AddRepositories();
 
             return services;

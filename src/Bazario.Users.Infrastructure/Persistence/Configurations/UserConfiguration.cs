@@ -1,4 +1,5 @@
 ﻿using Bazario.Users.Domain.Users;
+using Bazario.Users.Domain.Users.BirthDates;
 using Bazario.Users.Domain.Users.Emails;
 using Bazario.Users.Domain.Users.FirstNames;
 using Bazario.Users.Domain.Users.LastNames;
@@ -32,6 +33,11 @@ namespace Bazario.Users.Infrastructure.Persistence.Configurations
                 .HasConversion(
                     lastName => lastName.Value,
                     value => LastName.Create(value).Value);
+
+            builder.Property(user => user.BirthDate)
+                .HasConversion(
+                    birthDate => birthDate.Value,
+                    value => BirthDate.Create(value).Value);
 
             builder.Property(user => user.Email)
                 .HasMaxLength(Email.MaxLength)
