@@ -28,7 +28,7 @@ namespace Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins
             GetAllAdminsQuery request,
             CancellationToken cancellationToken)
         {
-            _logger.LogTrace("Start handling GetAllAdminsQuery.");
+            _logger.LogTrace("Starting handling GetAllAdminsQuery.");
 
             var admins = await _userRepository
                 .GetAllAdminsAsync(cancellationToken);
