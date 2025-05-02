@@ -10,7 +10,7 @@ namespace Bazario.Users.Domain.Users
                 description: "User has not been found.");
 
         public static readonly Error AlreadyBanned =
-            Error.NotFound(
+            Error.Validation(
                 code: "User.AlreadyBanned",
                 description: "User is already banned.");
     }

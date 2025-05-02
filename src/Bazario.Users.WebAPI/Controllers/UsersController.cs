@@ -1,4 +1,5 @@
-﻿using Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin;
+﻿using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
+using Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAdminById;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins;
 using Bazario.Users.WebAPI.Factories;
@@ -13,16 +14,13 @@ namespace Bazario.Users.WebAPI.Controllers
     {
         private readonly ISender _sender;
         private readonly ProblemDetailsFactory _problemDetailsFactory;
-        private readonly ILogger<UsersController> _logger;
 
         public UsersController(
             ISender sender,
-            ProblemDetailsFactory problemDetailsFactory,
-            ILogger<UsersController> logger)
+            ProblemDetailsFactory problemDetailsFactory)
         {
             _sender = sender;
             _problemDetailsFactory = problemDetailsFactory;
-            _logger = logger;
         }
 
         #region Queries
@@ -64,6 +62,18 @@ namespace Bazario.Users.WebAPI.Controllers
         {
             var commandResult = await _sender.Send(
                 new DeleteAdminCommand(id),
+                cancellationToken);
+
+            return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
+        }
+
+        [HttpPost("admins/ban")]
+        public async Task<IActionResult> DeleteAdmin(
+            [FromBody] BanAdminCommand command,
+            CancellationToken cancellationToken)
+        {
+            var commandResult = await _sender.Send(
+                request: command,
                 cancellationToken);
 
             return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
