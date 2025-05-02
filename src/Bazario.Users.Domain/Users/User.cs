@@ -1,6 +1,7 @@
 ﻿using Bazario.AspNetCore.Shared.Auth.Roles;
 using Bazario.AspNetCore.Shared.Domain;
 using Bazario.AspNetCore.Shared.Results;
+using Bazario.Users.Domain.Users.Bans;
 using Bazario.Users.Domain.Users.BirthDates;
 using Bazario.Users.Domain.Users.Emails;
 using Bazario.Users.Domain.Users.FirstNames;
@@ -43,6 +44,15 @@ namespace Bazario.Users.Domain.Users
         public PhoneNumber PhoneNumber { get; private set; }
 
         public BirthDate BirthDate { get; private set; }
+
+        public bool IsBanned => BanDetails is not null;
+
+        public BanDetails? BanDetails { get; private set; }
+
+        public void Ban(BanDetails banDetails)
+        {
+            BanDetails = banDetails;
+        }
 
         public static Result<User> Create(
             UserId userId,
