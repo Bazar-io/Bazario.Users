@@ -1,4 +1,5 @@
 ﻿using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
+using Bazario.Users.Application.UseCases.Users.Commands.BanUser;
 using Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAdminById;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins;
@@ -68,8 +69,20 @@ namespace Bazario.Users.WebAPI.Controllers
         }
 
         [HttpPost("admins/ban")]
-        public async Task<IActionResult> DeleteAdmin(
+        public async Task<IActionResult> BanAdmin(
             [FromBody] BanAdminCommand command,
+            CancellationToken cancellationToken)
+        {
+            var commandResult = await _sender.Send(
+                request: command,
+                cancellationToken);
+
+            return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
+        }
+
+        [HttpPost("ban")]
+        public async Task<IActionResult> BanUser(
+            [FromBody] BanUserCommand command,
             CancellationToken cancellationToken)
         {
             var commandResult = await _sender.Send(
