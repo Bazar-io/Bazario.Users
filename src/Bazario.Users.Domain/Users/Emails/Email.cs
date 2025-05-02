@@ -16,7 +16,7 @@ namespace Bazario.Users.Domain.Users.Emails
 
         public string Value { get; }
 
-        public static Result<Email> Create(string? value)
+        public static Result<Email> Create(string value)
         {
             var validationResult = ValidateEmailString(value);
 
@@ -33,7 +33,7 @@ namespace Bazario.Users.Domain.Users.Emails
             yield return Value;
         }
 
-        private static Result ValidateEmailString(string? email)
+        private static Result ValidateEmailString(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {

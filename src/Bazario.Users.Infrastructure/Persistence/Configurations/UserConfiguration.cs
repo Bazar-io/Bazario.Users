@@ -1,4 +1,5 @@
 ﻿using Bazario.Users.Domain.Users;
+using Bazario.Users.Domain.Users.Bans;
 using Bazario.Users.Domain.Users.BirthDates;
 using Bazario.Users.Domain.Users.Emails;
 using Bazario.Users.Domain.Users.FirstNames;
@@ -45,6 +46,7 @@ namespace Bazario.Users.Infrastructure.Persistence.Configurations
                     email => email.Value,
                     value => Email.Create(value).Value);
 
+            // This value is just for DB as the length is checked in the Value Object's regex.
             var phoneNumberMaxLength = 50;
 
             builder.Property(user => user.PhoneNumber)
@@ -52,6 +54,19 @@ namespace Bazario.Users.Infrastructure.Persistence.Configurations
                 .HasConversion(
                     phoneNumber => phoneNumber.Value,
                     value => PhoneNumber.Create(value).Value);
+
+            builder.OwnsOne(user => user.BanDetails, banDetails =>
+            {
+                banDetails.Property(b => b.Reason)
+                    .HasMaxLength(BanDetails.MaxReasonLength)
+                    .IsRequired();
+
+                banDetails.Property(b => b.BlockedAt)
+                    .IsRequired();
+
+                banDetails.Property(b => b.ExpiresAt)
+                    .IsRequired(false);
+            });
         }
     }
 }
