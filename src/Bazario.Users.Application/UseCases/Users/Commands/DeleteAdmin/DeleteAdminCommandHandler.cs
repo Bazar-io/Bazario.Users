@@ -62,9 +62,10 @@ namespace Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin
                 throw new InternalSystemException("Failed to delete admin even though the user is found in the storage. Affected rows equals 0.");
             }
 
-            if (affectedRows > 0)
+            if (affectedRows > 1)
             {
-                _logger.LogWarning("Deleted a few rows from the storage while trying to delete a single one.");
+                _logger.LogWarning(
+                    "Deleted a few rows from the storage while trying to delete a single one. Affected rows: {AffectedRows}", affectedRows);
             }
         }
 
