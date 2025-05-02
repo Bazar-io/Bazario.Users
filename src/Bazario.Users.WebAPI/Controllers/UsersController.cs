@@ -60,5 +60,19 @@ namespace Bazario.Users.WebAPI.Controllers
 
 
         #endregion
+
+        #region Commands
+
+
+        [HttpDelete("admins/{id:guid}")]
+        public async Task<IActionResult> DeleteAdmin(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken)
+        {
+            _logger.LogTrace("GetAdminById endpoint hit.");
+        }
+
+
+        #endregion
     }
 }

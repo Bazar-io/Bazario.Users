@@ -36,12 +36,12 @@ namespace Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin
                 userId: new UserId(request.AdminId),
                 cancellationToken: cancellationToken);
 
-            var isEligible = IsUserEligibleToBeDeleted(
+            var eligible = IsUserEligibleToBeDeleted(
                 request.AdminId, foundUser);
 
-            if (isEligible.IsFailure)
+            if (eligible.IsFailure)
             {
-                return isEligible.Error;
+                return eligible.Error;
             }
 
             await _userRepository.DeleteAsync(foundUser!);
