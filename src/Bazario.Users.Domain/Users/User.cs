@@ -49,9 +49,16 @@ namespace Bazario.Users.Domain.Users
 
         public BanDetails? BanDetails { get; private set; }
 
-        public void Ban(BanDetails banDetails)
+        public Result ApplyBan(BanDetails banDetails)
         {
+            if (IsBanned)
+            {
+                return Result.Failure(UserErrors.AlreadyBanned);
+            }
+
             BanDetails = banDetails;
+
+            return Result.Success();
         }
 
         public static Result<User> Create(
