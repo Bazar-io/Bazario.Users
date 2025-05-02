@@ -31,25 +31,25 @@ namespace Bazario.Users.Application.UseCases.Users.Queries.GetAdminById
         {
             _logger.LogTrace("Starting handling GetAdminByIdQuery.");
 
-            var retrievedUser = await _userRepository.GetByIdAsync(
+            var foundUser = await _userRepository.GetByIdAsync(
                 userId: new UserId(request.AdminId),
                 cancellationToken);
 
-            if (retrievedUser is null)
+            if (foundUser is null)
             {
                 _logger.LogDebug("User with ID {AdminId} not found.", request.AdminId);
 
                 return Result.Failure<UserResponse>(UserErrors.NotFound);
             }
 
-            if (retrievedUser.Role != Role.Admin)
+            if (foundUser.Role != Role.Admin)
             {
                 _logger.LogDebug("User with ID {AdminId} is not an Admin.", request.AdminId);
 
                 return Result.Failure<UserResponse>(UserErrors.NotFound);
             }
 
-            var mappedUser = _mapper.Map(retrievedUser);
+            var mappedUser = _mapper.Map(foundUser);
 
             _logger.LogTrace("Completed handling GetAdminByIdQuery.");
 
