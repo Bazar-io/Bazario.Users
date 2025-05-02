@@ -2,6 +2,7 @@ using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
 using Bazario.Users.WebAPI.Factories;
+using Bazario.Users.WebAPI.Filters;
 
 namespace Bazario.Users.WebAPI
 {
@@ -11,7 +12,10 @@ namespace Bazario.Users.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<RequestLoggingFilter>();
+            });
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
