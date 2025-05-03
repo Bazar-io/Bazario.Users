@@ -1,4 +1,4 @@
-﻿using Bazario.AspNetCore.Shared.Auth.Roles;
+﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.Users.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,7 +12,7 @@ namespace Bazario.Users.Infrastructure.Persistence.Repositories
         private readonly ApplicationDbContext _dbContext;
 
         public UserRepository(
-            ILogger<UserRepository> logger, 
+            ILogger<UserRepository> logger,
             ApplicationDbContext dbContext)
         {
             _logger = logger;
@@ -62,7 +62,7 @@ namespace Bazario.Users.Infrastructure.Persistence.Repositories
         }
 
         public async Task InsertAsync(
-            User user, 
+            User user,
             CancellationToken cancellationToken = default)
         {
             _logger.LogTrace("Inserting new user with ID: {UserId}", user.Id);

@@ -1,5 +1,5 @@
-﻿using Bazario.AspNetCore.Shared.Auth.Roles;
-using Bazario.AspNetCore.Shared.Infrastructure.Mappers;
+﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
+using Bazario.AspNetCore.Shared.Application.Mappers;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;

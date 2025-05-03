@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bazario.AspNetCore.Shared.Auth" Version="1.0.0" />
-    <PackageReference Include="Bazario.AspNetCore.Shared.Domain" Version="1.0.1" />
+    <PackageReference Include="Bazario.AspNetCore.Shared.Domain" Version="1.0.3" />
     <PackageReference Include="Bazario.AspNetCore.Shared.Results" Version="1.0.0" />
   </ItemGroup>
 

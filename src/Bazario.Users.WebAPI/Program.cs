@@ -1,6 +1,7 @@
 using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
+using Bazario.Users.WebAPI.Extensions;
 using Bazario.Users.WebAPI.Factories;
 using Bazario.Users.WebAPI.Filters;
 
@@ -28,6 +29,8 @@ namespace Bazario.Users.WebAPI
             builder.Services.AddSingleton<ProblemDetailsFactory>();
 
             var app = builder.Build();
+
+            app.Services.ValidateAppOptions();
 
             if (app.Environment.IsDevelopment())
             {
