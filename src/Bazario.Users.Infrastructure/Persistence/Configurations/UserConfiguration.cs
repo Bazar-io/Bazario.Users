@@ -1,10 +1,10 @@
-﻿using Bazario.Users.Domain.Users;
+﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.BirthDates;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Emails;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.FirstNames;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.LastNames;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.PhoneNumbers;
+using Bazario.Users.Domain.Users;
 using Bazario.Users.Domain.Users.Bans;
-using Bazario.Users.Domain.Users.BirthDates;
-using Bazario.Users.Domain.Users.Emails;
-using Bazario.Users.Domain.Users.FirstNames;
-using Bazario.Users.Domain.Users.LastNames;
-using Bazario.Users.Domain.Users.PhoneNumbers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

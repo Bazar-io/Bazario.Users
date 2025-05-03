@@ -1,12 +1,12 @@
-﻿using Bazario.AspNetCore.Shared.Auth.Roles;
-using Bazario.AspNetCore.Shared.Domain;
+﻿using Bazario.AspNetCore.Shared.Domain;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.BirthDates;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Emails;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.FirstNames;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.LastNames;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.PhoneNumbers;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Domain.Users.Bans;
-using Bazario.Users.Domain.Users.BirthDates;
-using Bazario.Users.Domain.Users.Emails;
-using Bazario.Users.Domain.Users.FirstNames;
-using Bazario.Users.Domain.Users.LastNames;
-using Bazario.Users.Domain.Users.PhoneNumbers;
 
 namespace Bazario.Users.Domain.Users
 {
@@ -37,7 +37,7 @@ namespace Bazario.Users.Domain.Users
 
         public FirstName FirstName { get; private set; }
 
-        public LastName LastName { get; private set; }  
+        public LastName LastName { get; private set; }
 
         public Email Email { get; private set; }
 
@@ -71,12 +71,12 @@ namespace Bazario.Users.Domain.Users
             BirthDate birthDate)
         {
             return new User(
-                userId, 
+                userId,
                 role,
-                firstName, 
-                lastName, 
-                email, 
-                phoneNumber, 
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
                 birthDate);
         }
     }

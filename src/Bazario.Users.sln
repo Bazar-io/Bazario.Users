@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazario.Users.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazario.Users.Infrastructure", "Bazario.Users.Infrastructure\Bazario.Users.Infrastructure.csproj", "{E9D1FA1A-8706-4CDD-AF63-541F7CE557B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BC51D2C-7ECF-4C26-A468-83E389AC7F7E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2F6CE001-DCF8-4608-9949-E884F350D239} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{04CFD07F-2A0E-4590-BB64-BC8FF2CB5537} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E9D1FA1A-8706-4CDD-AF63-541F7CE557B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F264C39F-BEDE-46A7-B01A-7EBEC2AA533C}

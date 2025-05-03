@@ -1,4 +1,4 @@
-﻿using Bazario.AspNetCore.Shared.Infrastructure.Mappers;
+﻿using Bazario.AspNetCore.Shared.Application.Mappers;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;
 

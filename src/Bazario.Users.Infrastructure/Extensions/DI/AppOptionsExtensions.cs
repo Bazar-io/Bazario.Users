@@ -1,4 +1,5 @@
-﻿using Bazario.Users.Infrastructure.Persistence.Options;
+﻿using Bazario.AspNetCore.Shared.Infrastructure.Options.DependencyInjection;
+using Bazario.Users.Infrastructure.Persistence.Options;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bazario.Users.Infrastructure.Extensions.DI
@@ -8,10 +9,8 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
         public static IServiceCollection AddAppOptions(
            this IServiceCollection services)
         {
-            services.AddOptions<DbSettings>()
-                .BindConfiguration(DbSettings.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+            services.ConfigureValidatableOptions<DbSettings, DbSettingsValidator>(
+                DbSettings.SectionName);
 
             return services;
         }

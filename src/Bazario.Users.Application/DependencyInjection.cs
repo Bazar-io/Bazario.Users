@@ -1,5 +1,5 @@
-﻿using Bazario.AspNetCore.Shared.Infrastructure.Behaviors.Validation.DependencyInjection;
-using Bazario.AspNetCore.Shared.Infrastructure.MediatR.DependencyInjection;
+﻿using Bazario.AspNetCore.Shared.Application.Behaviors.Validation.DependencyInjection;
+using Bazario.AspNetCore.Shared.Application.MediatR.DependencyInjection;
 using Bazario.Users.Application.Extensions.DI;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
