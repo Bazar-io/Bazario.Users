@@ -1,5 +1,5 @@
 ﻿using Bazario.AspNetCore.Shared.Application.Abstractions.Data;
-using Bazario.AspNetCore.Shared.Infrastructure.Options;
+using Bazario.AspNetCore.Shared.Options;
 using Bazario.Users.Infrastructure.Persistence;
 using Bazario.Users.Infrastructure.Persistence.Options;
 using Microsoft.EntityFrameworkCore;
