@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Bazario.AspNetCore.Shared.Application" Version="1.0.0" />
-    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
   </ItemGroup>
