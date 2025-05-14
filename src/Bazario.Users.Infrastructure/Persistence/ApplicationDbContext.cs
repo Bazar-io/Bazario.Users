@@ -1,4 +1,5 @@
-﻿using Bazario.Users.Domain.Users;
+﻿using Bazario.AspNetCore.Shared.Domain;
+using Bazario.Users.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bazario.Users.Infrastructure.Persistence
@@ -15,6 +16,8 @@ namespace Bazario.Users.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Ignore<DomainEvent>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(
                 typeof(ApplicationDbContext).Assembly);
