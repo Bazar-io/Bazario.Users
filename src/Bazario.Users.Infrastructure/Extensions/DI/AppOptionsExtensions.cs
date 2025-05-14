@@ -1,5 +1,6 @@
-﻿using Bazario.AspNetCore.Shared.Options.DependencyInjection;
-using Bazario.Users.Infrastructure.Persistence.Options;
+﻿using Bazario.AspNetCore.Shared.Infrastructure.MessageBroker.Options;
+using Bazario.AspNetCore.Shared.Infrastructure.Persistence.Options;
+using Bazario.AspNetCore.Shared.Options.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bazario.Users.Infrastructure.Extensions.DI
@@ -11,6 +12,8 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
         {
             services.ConfigureValidatableOptions<DbSettings, DbSettingsValidator>(
                 DbSettings.SectionName);
+            services.ConfigureValidatableOptions<MessageBrokerSettings, MessageBrokerSettingsValidator>(
+                MessageBrokerSettings.SectionName);
 
             return services;
         }
