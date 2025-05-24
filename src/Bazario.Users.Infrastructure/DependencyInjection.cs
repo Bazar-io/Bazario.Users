@@ -9,11 +9,11 @@ namespace Bazario.Users.Infrastructure
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services)
         {
-            var assembly = typeof(DependencyInjection).Assembly;
-
             services.AddAppOptions();
 
-            services.AddMessageBroker(assembly);
+            services.AddMessageBroker();
+
+            services.AddMessageConsumers();
 
             services.AddPersistence();
 

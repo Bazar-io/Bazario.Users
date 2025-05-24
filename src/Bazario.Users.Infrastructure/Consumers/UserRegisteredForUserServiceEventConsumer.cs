@@ -1,32 +1,32 @@
-﻿using Bazario.AspNetCore.Shared.Contracts.UserRegistered;
+﻿using Bazario.AspNetCore.Shared.Abstractions.MessageBroker;
+using Bazario.AspNetCore.Shared.Contracts.UserRegistered;
 using Bazario.Users.Application.UseCases.Users.Commands.InsertUser;
-using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Infrastructure.Consumers
 {
-    public sealed class UserRegisteredConsumer : IConsumer<UserRegisteredForUserServiceEvent>
+    public sealed class UserRegisteredForUserServiceEventConsumer 
+        : IMessageConsumer<UserRegisteredForUserServiceEvent>
     {
         private readonly ISender _sender;
-        private readonly ILogger<UserRegisteredConsumer> _logger;
+        private readonly ILogger<UserRegisteredForUserServiceEventConsumer> _logger;
 
-        public UserRegisteredConsumer(
+        public UserRegisteredForUserServiceEventConsumer(
             ISender sender,
-            ILogger<UserRegisteredConsumer> logger)
+            ILogger<UserRegisteredForUserServiceEventConsumer> logger)
         {
             _sender = sender;
             _logger = logger;
         }
 
-        public async Task Consume(
-            ConsumeContext<UserRegisteredForUserServiceEvent> context)
+        public async Task ConsumeAsync(
+            UserRegisteredForUserServiceEvent message,
+            CancellationToken cancellationToken = default)
         {
             _logger.LogInformation(
                 "User registered event received. UserId: {UserId}",
-                context.Message.UserId);
-
-            var message = context.Message;
+                message.UserId);
 
             var command = new InsertUserCommand(
                 UserId: message.UserId,
@@ -36,7 +36,9 @@ namespace Bazario.Users.Infrastructure.Consumers
                 BirthDate: message.BirthDate,
                 PhoneNumber: message.PhoneNumber);
 
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(
+                command,
+                cancellationToken);
 
             if (result.IsFailure)
             {
