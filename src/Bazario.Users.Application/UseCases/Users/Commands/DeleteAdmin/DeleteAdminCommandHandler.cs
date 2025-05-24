@@ -1,5 +1,5 @@
-﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
-using Bazario.AspNetCore.Shared.Application.Abstractions.Data;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Data;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.Exceptions;
 using Bazario.Users.Application.UseCases.Users.DTO;
