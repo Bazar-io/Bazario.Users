@@ -20,8 +20,11 @@ COPY ["Bazario.Users/src/Bazario.Users.Infrastructure/Bazario.Users.Infrastructu
 COPY Bazario.AspNetCore.Shared/NuGetPackages /nuget-packages
 RUN dotnet nuget add source /nuget-packages --name NuGetPackages
 
-COPY Bazario.Docker/scripts/wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
+# Copy the Bazario.Docker scripts and entrypoints
+COPY Bazario.Docker/scripts/wait-for-it.sh ./scripts/wait-for-it.sh
+COPY Bazario.Docker/scripts/entrypoints/bazario-users-webapi-entrypoint.sh ./scripts/entrypoints/bazario-users-webapi-entrypoint.sh
+
+RUN chmod +x ./scripts/entrypoints/bazario-users-webapi-entrypoint.sh ./scripts/wait-for-it.sh
 
 RUN dotnet restore "./Bazario.Users.WebAPI/Bazario.Users.WebAPI.csproj"
 COPY Bazario.Users/src/ .
@@ -37,4 +40,10 @@ RUN dotnet publish "./Bazario.Users.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /a
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Copy the Bazario.Docker scripts to the final image
+
+COPY --from=build src/scripts/entrypoints/bazario-users-webapi-entrypoint.sh scripts/entrypoints/bazario-users-webapi-entrypoint.sh
+COPY --from=build src/scripts/wait-for-it.sh scripts/wait-for-it.sh
+
 ENTRYPOINT ["dotnet", "Bazario.Users.WebAPI.dll"]
