@@ -65,7 +65,7 @@ namespace Bazario.Users.Application.UseCases.Users.Mappers
 
             return User.Create(
                 userId,
-                Role.User,
+                source.Role,
                 firstName,
                 lastName,
                 email,
