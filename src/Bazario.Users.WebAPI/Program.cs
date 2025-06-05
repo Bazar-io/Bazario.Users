@@ -24,8 +24,6 @@ namespace Bazario.Users.WebAPI
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
 
-            builder.Services.AddHttpContextAccessor();
-
             builder.Services.AddSingleton<ProblemDetailsFactory>();
 
             var app = builder.Build();
