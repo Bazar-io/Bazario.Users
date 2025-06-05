@@ -1,6 +1,5 @@
-﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
-using Bazario.AspNetCore.Shared.Results;
-using MediatR;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 
 namespace Bazario.Users.Application.UseCases.Users.Commands.InsertUser
 {
@@ -11,5 +10,5 @@ namespace Bazario.Users.Application.UseCases.Users.Commands.InsertUser
         string LastName,
         DateOnly BirthDate,
         string PhoneNumber,
-        Role Role = Role.User) : IRequest<Result>;
+        Role Role = Role.User) : ICommand;
 }

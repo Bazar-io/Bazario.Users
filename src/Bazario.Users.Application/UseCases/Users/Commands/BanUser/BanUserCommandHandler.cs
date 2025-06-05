@@ -1,17 +1,17 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Data;
+using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.Exceptions;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;
 using Bazario.Users.Domain.Users.Bans;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Application.UseCases.Users.Commands.BanUser
 {
     internal sealed class BanUserCommandHandler
-        : IRequestHandler<BanUserCommand, Result>
+        : ICommandHandler<BanUserCommand>
     {
         private readonly ILogger<BanUserCommandHandler> _logger;
         private readonly IUserRepository _userRepository;

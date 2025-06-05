@@ -1,22 +1,22 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.MessageBroker;
+using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Contracts.UserRegistered;
 using Bazario.Users.Application.UseCases.Users.Commands.InsertUser;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Infrastructure.Consumers
 {
-    public sealed class UserRegisteredForUserServiceEventConsumer 
+    public sealed class UserRegisteredForUserServiceEventConsumer
         : IMessageConsumer<UserRegisteredForUserServiceEvent>
     {
-        private readonly ISender _sender;
+        private readonly ICommandHandler<InsertUserCommand> _insertUserCommandHandler;
         private readonly ILogger<UserRegisteredForUserServiceEventConsumer> _logger;
 
         public UserRegisteredForUserServiceEventConsumer(
-            ISender sender,
+            ICommandHandler<InsertUserCommand> insertUserCommandHandler,
             ILogger<UserRegisteredForUserServiceEventConsumer> logger)
         {
-            _sender = sender;
+            _insertUserCommandHandler = insertUserCommandHandler;
             _logger = logger;
         }
 
@@ -36,7 +36,7 @@ namespace Bazario.Users.Infrastructure.Consumers
                 BirthDate: message.BirthDate,
                 PhoneNumber: message.PhoneNumber);
 
-            var result = await _sender.Send(
+            var result = await _insertUserCommandHandler.Handle(
                 command,
                 cancellationToken);
 
