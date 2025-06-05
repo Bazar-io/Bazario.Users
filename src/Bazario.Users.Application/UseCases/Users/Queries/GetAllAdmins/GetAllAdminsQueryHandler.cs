@@ -1,14 +1,14 @@
-﻿using Bazario.AspNetCore.Shared.Application.Mappers;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
+using Bazario.AspNetCore.Shared.Application.Mappers;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins
 {
     internal sealed class GetAllAdminsQueryHandler
-        : IRequestHandler<GetAllAdminsQuery, Result<IEnumerable<UserResponse>>>
+        : IQueryHandler<GetAllAdminsQuery, IEnumerable<UserResponse>>
     {
         private readonly ILogger<GetAllAdminsQueryHandler> _logger;
         private readonly IUserRepository _userRepository;

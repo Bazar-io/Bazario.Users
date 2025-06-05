@@ -1,9 +1,8 @@
-﻿using Bazario.AspNetCore.Shared.Results;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.Users.Application.UseCases.Users.DTO;
-using MediatR;
 
 namespace Bazario.Users.Application.UseCases.Users.Queries.GetAdminById
 {
-    public sealed record GetAdminByIdQuery(Guid AdminId) 
-        : IRequest<Result<UserResponse>>;
+    public sealed record GetAdminByIdQuery(Guid AdminId)
+        : IQuery<UserResponse>;
 }

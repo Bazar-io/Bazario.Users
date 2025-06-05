@@ -1,4 +1,5 @@
 ﻿using Bazario.AspNetCore.Shared.Infrastructure.MessageBroker.DependencyInjection;
+using Bazario.AspNetCore.Shared.Infrastructure.Services.DependencyInjection;
 using Bazario.Users.Infrastructure.Extensions.DI;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,8 @@ namespace Bazario.Users.Infrastructure
             services.AddPersistence();
 
             services.AddRepositories();
+
+            services.AddUserContextServiceWithHttpContextAccessor();
 
             return services;
         }

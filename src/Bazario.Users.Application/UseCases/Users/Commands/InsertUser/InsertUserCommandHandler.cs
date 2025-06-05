@@ -1,13 +1,13 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Data;
+using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Application.Mappers;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Domain.Users;
-using MediatR;
 
 namespace Bazario.Users.Application.UseCases.Users.Commands.InsertUser
 {
     internal sealed class InsertUserCommandHandler
-        : IRequestHandler<InsertUserCommand, Result>
+        : ICommandHandler<InsertUserCommand>
     {
         private readonly IUserRepository _userRepository;
         private readonly Mapper<InsertUserCommand, Result<User>> _commandMapper;

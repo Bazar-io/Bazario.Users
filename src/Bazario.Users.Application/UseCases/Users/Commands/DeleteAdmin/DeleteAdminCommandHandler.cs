@@ -1,16 +1,16 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Data;
+using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.Exceptions;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin
 {
     internal sealed class DeleteAdminCommandHandler
-        : IRequestHandler<DeleteAdminCommand, Result>
+        : ICommandHandler<DeleteAdminCommand>
     {
         private readonly ILogger<DeleteAdminCommandHandler> _logger;
         private readonly IUserRepository _userRepository;
@@ -71,7 +71,7 @@ namespace Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin
         }
 
         private Result IsUserEligibleToBeDeleted(
-            Guid adminId, 
+            Guid adminId,
             User? foundUser)
         {
             if (foundUser is null)

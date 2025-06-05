@@ -1,8 +1,8 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.MessageBroker;
+using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Contracts.AdminRegistered;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.Users.Application.UseCases.Users.Commands.InsertUser;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Infrastructure.Consumers
@@ -10,14 +10,14 @@ namespace Bazario.Users.Infrastructure.Consumers
     internal sealed class AdminRegisteredForUserServiceEventConsumer
         : IMessageConsumer<AdminRegisteredForUserServiceEvent>
     {
-        private readonly ISender _sender;
+        private readonly ICommandHandler<InsertUserCommand> _insertUserCommandHandler;
         private readonly ILogger<AdminRegisteredForUserServiceEvent> _logger;
 
         public AdminRegisteredForUserServiceEventConsumer(
-            ISender sender,
+            ICommandHandler<InsertUserCommand> insertUserCommandHandler,
             ILogger<AdminRegisteredForUserServiceEvent> logger)
         {
-            _sender = sender;
+            _insertUserCommandHandler = insertUserCommandHandler;
             _logger = logger;
         }
 
@@ -38,7 +38,7 @@ namespace Bazario.Users.Infrastructure.Consumers
                 PhoneNumber: message.PhoneNumber,
                 Role: Role.Admin);
 
-            var result = await _sender.Send(
+            var result = await _insertUserCommandHandler.Handle(
                 command,
                 cancellationToken);
 

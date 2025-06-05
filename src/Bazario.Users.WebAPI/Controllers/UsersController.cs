@@ -1,29 +1,28 @@
-﻿using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
+using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
 using Bazario.Users.Application.UseCases.Users.Commands.BanUser;
 using Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin;
+using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAdminById;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins;
 using Bazario.Users.WebAPI.Factories;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazario.Users.WebAPI.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public sealed class UsersController : ControllerBase
+    public sealed class UsersController(
+        #region Handlers
+        IQueryHandler<GetAllAdminsQuery, IEnumerable<UserResponse>> getAllAdminsQueryHandler,
+        IQueryHandler<GetAdminByIdQuery, UserResponse> getAdminByIdQueryHandler,
+        ICommandHandler<DeleteAdminCommand> deleteAdminCommandHandler,
+        ICommandHandler<BanAdminCommand> banAdminCommandHandler,
+        ICommandHandler<BanUserCommand> banUserCommandHandler,
+        #endregion
+        ProblemDetailsFactory problemDetailsFactory) : ControllerBase
     {
-        private readonly ISender _sender;
-        private readonly ProblemDetailsFactory _problemDetailsFactory;
-
-        public UsersController(
-            ISender sender,
-            ProblemDetailsFactory problemDetailsFactory)
-        {
-            _sender = sender;
-            _problemDetailsFactory = problemDetailsFactory;
-        }
-
         #region Queries
 
 
@@ -31,11 +30,11 @@ namespace Bazario.Users.WebAPI.Controllers
         public async Task<IActionResult> GetAllAdmins(
             CancellationToken cancellationToken)
         {
-            var queryResult = await _sender.Send(
+            var queryResult = await getAllAdminsQueryHandler.Handle(
                 new GetAllAdminsQuery(),
                 cancellationToken);
 
-            return queryResult.IsSuccess ? Ok(queryResult.Value) : _problemDetailsFactory.GetProblemDetails(queryResult);
+            return queryResult.IsSuccess ? Ok(queryResult.Value) : problemDetailsFactory.GetProblemDetails(queryResult);
         }
 
         [HttpGet("admins/{id:guid}")]
@@ -43,11 +42,11 @@ namespace Bazario.Users.WebAPI.Controllers
             [FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-            var queryResult = await _sender.Send(
+            var queryResult = await getAdminByIdQueryHandler.Handle(
                 new GetAdminByIdQuery(id),
                 cancellationToken);
 
-            return queryResult.IsSuccess ? Ok(queryResult.Value) : _problemDetailsFactory.GetProblemDetails(queryResult);
+            return queryResult.IsSuccess ? Ok(queryResult.Value) : problemDetailsFactory.GetProblemDetails(queryResult);
         }
 
 
@@ -61,11 +60,11 @@ namespace Bazario.Users.WebAPI.Controllers
             [FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-            var commandResult = await _sender.Send(
+            var commandResult = await deleteAdminCommandHandler.Handle(
                 new DeleteAdminCommand(id),
                 cancellationToken);
 
-            return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
+            return commandResult.IsSuccess ? NoContent() : problemDetailsFactory.GetProblemDetails(commandResult);
         }
 
         [HttpPost("admins/ban")]
@@ -73,11 +72,11 @@ namespace Bazario.Users.WebAPI.Controllers
             [FromBody] BanAdminCommand command,
             CancellationToken cancellationToken)
         {
-            var commandResult = await _sender.Send(
-                request: command,
+            var commandResult = await banAdminCommandHandler.Handle(
+                command,
                 cancellationToken);
 
-            return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
+            return commandResult.IsSuccess ? NoContent() : problemDetailsFactory.GetProblemDetails(commandResult);
         }
 
         [HttpPost("ban")]
@@ -85,11 +84,11 @@ namespace Bazario.Users.WebAPI.Controllers
             [FromBody] BanUserCommand command,
             CancellationToken cancellationToken)
         {
-            var commandResult = await _sender.Send(
-                request: command,
+            var commandResult = await banUserCommandHandler.Handle(
+                command,
                 cancellationToken);
 
-            return commandResult.IsSuccess ? NoContent() : _problemDetailsFactory.GetProblemDetails(commandResult);
+            return commandResult.IsSuccess ? NoContent() : problemDetailsFactory.GetProblemDetails(commandResult);
         }
 
 
