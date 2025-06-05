@@ -1,15 +1,15 @@
-﻿using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Application.Mappers;
+using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Domain.Users;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Application.UseCases.Users.Queries.GetAdminById
 {
     internal sealed class GetAdminByIdQueryHandler
-        : IRequestHandler<GetAdminByIdQuery, Result<UserResponse>>
+        : IQueryHandler<GetAdminByIdQuery, UserResponse>
     {
         private readonly ILogger<GetAdminByIdQueryHandler> _logger;
         private readonly IUserRepository _userRepository;
