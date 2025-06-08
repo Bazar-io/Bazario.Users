@@ -1,4 +1,5 @@
-﻿using Bazario.AspNetCore.Shared.Infrastructure.MessageBroker.Options;
+﻿using Bazario.AspNetCore.Shared.Authentication.Options;
+using Bazario.AspNetCore.Shared.Infrastructure.MessageBroker.Options;
 using Bazario.AspNetCore.Shared.Infrastructure.Persistence.Options;
 using Bazario.AspNetCore.Shared.Options.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
                 DbSettings.SectionName);
             services.ConfigureValidatableOptions<MessageBrokerSettings, MessageBrokerSettingsValidator>(
                 MessageBrokerSettings.SectionName);
+            services.ConfigureValidatableOptions<JwtSettings, JwtSettingsValidator>(
+                JwtSettings.SectionName);
 
             return services;
         }

@@ -13,5 +13,10 @@ namespace Bazario.Users.Domain.Users
             Error.Validation(
                 code: "User.AlreadyBanned",
                 description: "User is already banned.");
+
+        public static readonly Error NotAdmin =
+            Error.Validation(
+                code: "User.NotAdmin",
+                description: "User is not an admin.");
     }
 }
