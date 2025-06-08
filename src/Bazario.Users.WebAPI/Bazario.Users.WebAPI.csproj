@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bazario.AspNetCore.Shared.Api" Version="1.0.0" />
     <PackageReference Include="Bazario.AspNetCore.Shared.Authorization" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">

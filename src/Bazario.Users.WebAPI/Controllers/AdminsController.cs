@@ -1,4 +1,5 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
+using Bazario.AspNetCore.Shared.Api.Factories;
 using Bazario.AspNetCore.Shared.Authorization.Attributes;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
@@ -7,7 +8,6 @@ using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAdminById;
 using Bazario.Users.Application.UseCases.Users.Queries.GetAllAdmins;
 using Bazario.Users.Application.UseCases.Users.Queries.GetCurrentAdmin;
-using Bazario.Users.WebAPI.Factories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazario.Users.WebAPI.Controllers
