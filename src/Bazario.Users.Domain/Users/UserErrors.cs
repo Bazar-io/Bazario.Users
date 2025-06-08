@@ -18,5 +18,10 @@ namespace Bazario.Users.Domain.Users
             Error.Validation(
                 code: "User.NotAdmin",
                 description: "User is not an admin.");
+
+        public static readonly Error NotUser =
+            Error.Validation(
+                code: "User.NotUser",
+                description: "User is not a regular user.");
     }
 }

@@ -15,13 +15,6 @@ namespace Bazario.Users.WebAPI.Controllers
     [Route("api/admins")]
     [ApiController]
     public class AdminsController(
-        #region Handlers
-        IQueryHandler<GetAllAdminsQuery, IEnumerable<UserResponse>> getAllAdminsQueryHandler,
-        IQueryHandler<GetAdminByIdQuery, UserResponse> getAdminByIdQueryHandler,
-        IQueryHandler<GetCurrentAdminQuery, UserResponse> getCurrentAdminQueryHandler,
-        ICommandHandler<DeleteAdminCommand> deleteAdminCommandHandler,
-        ICommandHandler<BanAdminCommand> banAdminCommandHandler,
-        #endregion
         ProblemDetailsFactory problemDetailsFactory) : ControllerBase
     {
         #region Queries
@@ -30,9 +23,10 @@ namespace Bazario.Users.WebAPI.Controllers
         [HasRole(Role.Owner)]
         [HttpGet]
         public async Task<IActionResult> GetAllAdmins(
+            [FromServices] IQueryHandler<GetAllAdminsQuery, IEnumerable<UserResponse>> queryHandler,
             CancellationToken cancellationToken)
         {
-            var queryResult = await getAllAdminsQueryHandler.Handle(
+            var queryResult = await queryHandler.Handle(
                 new GetAllAdminsQuery(),
                 cancellationToken);
 
@@ -42,10 +36,11 @@ namespace Bazario.Users.WebAPI.Controllers
         [HasRole(Role.Owner)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetAdminById(
+            [FromServices] IQueryHandler<GetAdminByIdQuery, UserResponse> queryHandler,
             [FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-            var queryResult = await getAdminByIdQueryHandler.Handle(
+            var queryResult = await queryHandler.Handle(
                 new GetAdminByIdQuery(id),
                 cancellationToken);
 
@@ -55,9 +50,10 @@ namespace Bazario.Users.WebAPI.Controllers
         [HasRole(Role.Admin)]
         [HttpGet("current")]
         public async Task<IActionResult> GetCurrentAdmin(
+            [FromServices] IQueryHandler<GetCurrentAdminQuery, UserResponse> queryHandler,
             CancellationToken cancellationToken)
         {
-            var queryResult = await getCurrentAdminQueryHandler.Handle(
+            var queryResult = await queryHandler.Handle(
                 new GetCurrentAdminQuery(),
                 cancellationToken);
 
@@ -73,10 +69,11 @@ namespace Bazario.Users.WebAPI.Controllers
         [HasRole(Role.Owner)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAdmin(
+            [FromServices] ICommandHandler<DeleteAdminCommand> commandHandler,
             [FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-            var commandResult = await deleteAdminCommandHandler.Handle(
+            var commandResult = await commandHandler.Handle(
                 new DeleteAdminCommand(id),
                 cancellationToken);
 
@@ -86,10 +83,11 @@ namespace Bazario.Users.WebAPI.Controllers
         [HasRole(Role.Owner)]
         [HttpPost("ban")]
         public async Task<IActionResult> BanAdmin(
+            [FromServices] ICommandHandler<BanAdminCommand> commandHandler,
             [FromBody] BanAdminCommand command,
             CancellationToken cancellationToken)
         {
-            var commandResult = await banAdminCommandHandler.Handle(
+            var commandResult = await commandHandler.Handle(
                 command,
                 cancellationToken);
 
