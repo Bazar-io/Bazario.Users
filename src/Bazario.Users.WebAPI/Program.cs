@@ -1,11 +1,11 @@
+using Bazario.AspNetCore.Shared.Api.Factories.DependencyInjection;
+using Bazario.AspNetCore.Shared.Api.Middleware.DependencyInjection;
 using Bazario.AspNetCore.Shared.Authentication.DependencyInjection;
 using Bazario.AspNetCore.Shared.Authorization.DependencyInjection;
 using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
 using Bazario.Users.WebAPI.Extensions;
-using Bazario.Users.WebAPI.Extensions.DI;
-using Bazario.Users.WebAPI.Factories;
 using Bazario.Users.WebAPI.Filters;
 
 namespace Bazario.Users.WebAPI
@@ -30,7 +30,7 @@ namespace Bazario.Users.WebAPI
             builder.Services.ConfigureAuthentication();
             builder.Services.ConfigureAuthorization();
 
-            builder.Services.AddSingleton<ProblemDetailsFactory>();
+            builder.Services.AddProblemDetailsFactory();
 
             var app = builder.Build();
 
@@ -44,7 +44,7 @@ namespace Bazario.Users.WebAPI
 
             app.UseHttpsRedirection();
 
-            app.AddMiddleware();
+            app.UseExceptionHandlingMiddleware();
 
             app.ApplyMigrations();
 
