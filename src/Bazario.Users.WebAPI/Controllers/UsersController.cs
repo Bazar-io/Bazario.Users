@@ -3,6 +3,7 @@ using Bazario.AspNetCore.Shared.Api.Factories;
 using Bazario.AspNetCore.Shared.Authorization.Attributes;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.Users.Application.UseCases.Users.Commands.BanUser;
+using Bazario.Users.Application.UseCases.Users.Commands.UpdateUser;
 using Bazario.Users.Application.UseCases.Users.DTO;
 using Bazario.Users.Application.UseCases.Users.Queries.GetCurrentUser;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,20 @@ namespace Bazario.Users.WebAPI.Controllers
 
         #region Commands
 
+
+        [HasRole(Role.User)]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCurrentUser(
+            [FromServices] ICommandHandler<UpdateUserCommand> commandHandler,
+            [FromBody] UpdateUserCommand command,
+            CancellationToken cancellationToken)
+        {
+            var commandResult = await commandHandler.Handle(
+                command,
+                cancellationToken);
+
+            return commandResult.IsSuccess ? NoContent() : problemDetailsFactory.GetProblemDetails(commandResult);
+        }
 
         [HasRole(Role.Admin)]
         [HttpPost("ban")]
