@@ -9,6 +9,16 @@ namespace Bazario.Users.Domain.Users
                 code: "User.NotFound",
                 description: "User has not been found.");
 
+        public static Error UpdateTimeLimit(string property) =>
+            Error.Validation(
+                code: $"User.UpdateTimeLimit",
+                description: $"You can only update your {property} once per year.");
+
+        public static readonly Error Banned =
+            Error.Validation(
+                code: "User.Banned",
+                description: "User is banned.");
+
         public static readonly Error AlreadyBanned =
             Error.Validation(
                 code: "User.AlreadyBanned",

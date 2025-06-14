@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bazario.Users.Infrastructure.Persistence
 {
-    internal sealed class ApplicationDbContext : DbContext
+    public sealed class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
