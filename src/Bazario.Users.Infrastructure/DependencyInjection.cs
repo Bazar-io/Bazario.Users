@@ -22,6 +22,8 @@ namespace Bazario.Users.Infrastructure
 
             services.AddUserContextServiceWithHttpContextAccessor();
 
+            services.ConfigureAppBackgroundJobs();
+
             return services;
         }
     }

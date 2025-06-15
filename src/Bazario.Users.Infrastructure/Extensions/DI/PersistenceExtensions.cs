@@ -1,4 +1,6 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Data;
+using Bazario.AspNetCore.Shared.Infrastructure.Persistence.DependencyInjection;
+using Bazario.AspNetCore.Shared.Infrastructure.Persistence.Interceptors;
 using Bazario.AspNetCore.Shared.Infrastructure.Persistence.Options;
 using Bazario.AspNetCore.Shared.Options;
 using Bazario.Users.Infrastructure.Persistence;
@@ -12,11 +14,19 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
         public static IServiceCollection AddPersistence(
             this IServiceCollection services)
         {
+            services.RegisterInterceptors();
+
             services.AddAppDbContext();
 
             services.AddUnitOfWork();
 
             return services;
+        }
+
+        private static IServiceCollection RegisterInterceptors(
+            this IServiceCollection services)
+        {
+            return services.RegisterInterceptor<ConvertDomainEventsToOutboxMessagesInterceptor>();
         }
 
         private static void AddAppDbContext(
@@ -25,7 +35,9 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
             services.AddDbContext<ApplicationDbContext>(
                 (serviceProvider, options) =>
                 {
-                    options.UseNpgsqlWithDbSettings(serviceProvider);
+                    options
+                        .UseNpgsqlWithDbSettings(serviceProvider)
+                        .AddAppInterceptors(serviceProvider);
                 });
         }
 
@@ -36,6 +48,16 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
             var dbSettings = serviceProvider.GetOptions<DbSettings>();
 
             return options.UseNpgsql(dbSettings.ConnectionString);
+        }
+
+        private static DbContextOptionsBuilder AddAppInterceptors(
+            this DbContextOptionsBuilder options,
+            IServiceProvider serviceProvider)
+        {
+            var publishDomainEventsInterceptor = serviceProvider
+                .GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+
+            return options.AddInterceptors(publishDomainEventsInterceptor);
         }
 
         private static IServiceCollection AddUnitOfWork(
