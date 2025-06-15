@@ -1,4 +1,5 @@
 ﻿using Bazario.AspNetCore.Shared.Application.Behaviors.Validation.DependencyInjection;
+using Bazario.AspNetCore.Shared.Application.DomainEvents.DependencyInjection;
 using Bazario.AspNetCore.Shared.Application.Messaging.DependencyInjection;
 using Bazario.Users.Application.Extensions.DI;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace Bazario.Users.Application
 
             services.AddMessaging(assembly);
 
-            // Reminder to add DomainEventHandlers
+            services.AddDomainEventHandlers(assembly);
 
             services.AddValidators(
                 assembly: assembly,

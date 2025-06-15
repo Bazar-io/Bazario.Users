@@ -38,7 +38,7 @@ namespace Bazario.Users.WebAPI.Controllers
 
 
         [HasRole(Role.User)]
-        [HttpPut]
+        [HttpPut("current")]
         public async Task<IActionResult> UpdateCurrentUser(
             [FromServices] ICommandHandler<UpdateUserCommand> commandHandler,
             [FromBody] UpdateUserCommand command,
