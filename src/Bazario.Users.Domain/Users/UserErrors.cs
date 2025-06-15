@@ -9,6 +9,11 @@ namespace Bazario.Users.Domain.Users
                 code: "User.NotFound",
                 description: "User has not been found.");
 
+        public static readonly Error UserPropertiesIdentical =
+            Error.Validation(
+                code: "User.UserPropertiesIdentical",
+                description: "Can't update user. User's properties are identical to previous.");
+
         public static Error UpdateTimeLimit(string property) =>
             Error.Validation(
                 code: $"User.UpdateTimeLimit",

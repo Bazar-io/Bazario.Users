@@ -7,6 +7,7 @@ using Bazario.AspNetCore.Shared.Domain.Common.Users.PhoneNumbers;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Domain.Users.Bans;
+using Bazario.Users.Domain.Users.DomainEvents;
 
 namespace Bazario.Users.Domain.Users
 {
@@ -94,6 +95,11 @@ namespace Bazario.Users.Domain.Users
             var phoneNumberIsSame = PhoneNumber == phoneNumber;
             var birthDateIsSame = BirthDate == birthDate;
 
+            if (firstNameIsSame && lastNameIsSame && emailIsSame && phoneNumberIsSame && birthDateIsSame)
+            {
+                return UserErrors.UserPropertiesIdentical;
+            }
+
             var validationResult = ValidateUpdateTimeLimits(
                 firstNameIsSame,
                 lastNameIsSame,
@@ -111,6 +117,14 @@ namespace Bazario.Users.Domain.Users
             UpdateEmail(email, emailIsSame);
             UpdatePhoneNumber(phoneNumber, phoneNumberIsSame);
             UpdateBirthDate(birthDate, birthDateIsSame);
+
+            RaiseDomainEvent(new UserUpdatedDomainEvent(
+                Id.Value,
+                firstName.Value,
+                lastName.Value,
+                email.Value,
+                phoneNumber.Value,
+                birthDate.Value));
 
             return Result.Success();
         }
