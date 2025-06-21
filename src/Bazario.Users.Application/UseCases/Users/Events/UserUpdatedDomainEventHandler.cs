@@ -29,8 +29,6 @@ namespace Bazario.Users.Application.UseCases.Users.Events
             await _messagePublisher.PublishAsync(
                 new UserUpdatedForIdentityServiceEvent(
                     domainEvent.UserId,
-                    domainEvent.FirstName,
-                    domainEvent.LastName,
                     domainEvent.Email,
                     domainEvent.PhoneNumber
                 ),
