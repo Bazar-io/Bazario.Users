@@ -32,7 +32,7 @@ namespace Bazario.Users.Application.UseCases.Users.Events
                     domainEvent.Email,
                     domainEvent.PhoneNumber
                 ),
-                cancellationToken);
+                cancellationToken: cancellationToken);
 
             _logger.LogInformation("Publishing user updated for listing service event for user {Id}", domainEvent.UserId);
 
@@ -43,7 +43,7 @@ namespace Bazario.Users.Application.UseCases.Users.Events
                     domainEvent.LastName,
                     domainEvent.PhoneNumber
                 ),
-                cancellationToken);
+                cancellationToken: cancellationToken);
         }
     }
 }
