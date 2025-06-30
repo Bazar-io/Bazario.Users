@@ -11,7 +11,7 @@ using Bazario.Users.Domain.Users.DomainEvents;
 
 namespace Bazario.Users.Domain.Users
 {
-    public sealed class User : AggregateRoot<UserId>
+    public sealed partial class User : AggregateRoot<UserId>
     {
         private User()
             : base(new(Guid.Empty))
@@ -69,62 +69,9 @@ namespace Bazario.Users.Domain.Users
 
             BanDetails = banDetails;
 
-            return Result.Success();
-        }
-
-        public Result Update(
-            FirstName firstName,
-            LastName lastName,
-            Email email,
-            PhoneNumber phoneNumber,
-            BirthDate birthDate)
-        {
-            if (IsBanned)
-            {
-                return UserErrors.Banned;
-            }
-
-            if (Role != Role.User)
-            {
-                return UserErrors.NotUser;
-            }
-
-            var firstNameIsSame = FirstName == firstName;
-            var lastNameIsSame = LastName == lastName;
-            var emailIsSame = Email == email;
-            var phoneNumberIsSame = PhoneNumber == phoneNumber;
-            var birthDateIsSame = BirthDate == birthDate;
-
-            if (firstNameIsSame && lastNameIsSame && emailIsSame && phoneNumberIsSame && birthDateIsSame)
-            {
-                return UserErrors.UserPropertiesIdentical;
-            }
-
-            var validationResult = ValidateUpdateTimeLimits(
-                firstNameIsSame,
-                lastNameIsSame,
-                emailIsSame,
-                phoneNumberIsSame,
-                birthDateIsSame);
-
-            if (validationResult.IsFailure)
-            {
-                return validationResult;
-            }
-
-            UpdateFirstName(firstName, firstNameIsSame);
-            UpdateLastName(lastName, lastNameIsSame);
-            UpdateEmail(email, emailIsSame);
-            UpdatePhoneNumber(phoneNumber, phoneNumberIsSame);
-            UpdateBirthDate(birthDate, birthDateIsSame);
-
-            RaiseDomainEvent(new UserUpdatedDomainEvent(
+            RaiseDomainEvent(new UserBannedDomainEvent(
                 Id.Value,
-                firstName.Value,
-                lastName.Value,
-                email.Value,
-                phoneNumber.Value,
-                birthDate.Value));
+                BanDetails.ExpiresAt));
 
             return Result.Success();
         }
@@ -146,85 +93,6 @@ namespace Bazario.Users.Domain.Users
                 email,
                 phoneNumber,
                 birthDate);
-        }
-
-        private void UpdateFirstName(FirstName value, bool isSame)
-        {
-            if (isSame)
-                return;
-
-            FirstName = value;
-            FirstNameUpdatedAt = DateTime.UtcNow;
-        }
-
-        private void UpdateLastName(LastName value, bool isSame)
-        {
-            if (isSame)
-                return;
-
-            LastName = value;
-            LastNameUpdatedAt = DateTime.UtcNow;
-        }
-
-        private void UpdateEmail(Email value, bool isSame)
-        {
-            if (isSame)
-                return;
-
-            Email = value;
-            EmailUpdatedAt = DateTime.UtcNow;
-        }
-
-        private void UpdatePhoneNumber(PhoneNumber value, bool isSame)
-        {
-            if (isSame)
-                return;
-
-            PhoneNumber = value;
-            PhoneNumberUpdatedAt = DateTime.UtcNow;
-        }
-
-        private void UpdateBirthDate(BirthDate value, bool isSame)
-        {
-            if (isSame)
-                return;
-
-            BirthDate = value;
-            BirthDateUpdatedAt = DateTime.UtcNow;
-        }
-
-        private Result ValidateUpdateTimeLimits(
-            bool firstNameIsSame,
-            bool lastNameIsSame,
-            bool emailIsSame,
-            bool phoneNumberIsSame,
-            bool birthDateIsSame)
-        {
-            var results = new List<Result>
-            {
-                ValidateUpdateTimeLimit(firstNameIsSame, FirstNameUpdatedAt, nameof(FirstName)),
-                ValidateUpdateTimeLimit(lastNameIsSame, LastNameUpdatedAt, nameof(LastName)),
-                ValidateUpdateTimeLimit(emailIsSame, EmailUpdatedAt, nameof(Email)),
-                ValidateUpdateTimeLimit(phoneNumberIsSame, PhoneNumberUpdatedAt, nameof(PhoneNumber)),
-                ValidateUpdateTimeLimit(birthDateIsSame, BirthDateUpdatedAt, nameof(BirthDate))
-            };
-
-            return results.FirstOrDefault(r => r.IsFailure) ?? Result.Success();
-        }
-
-        private static Result ValidateUpdateTimeLimit(
-            bool propertyIsSameAsValue,
-            DateTime? updatedAt,
-            string propertyName)
-        {
-            if (!propertyIsSameAsValue &&
-                updatedAt is not null &&
-                updatedAt.Value.AddYears(1) > DateTime.UtcNow)
-            {
-                return UserErrors.UpdateTimeLimit(propertyName);
-            }
-
-            return Result.Success();
         }
     }
 }
