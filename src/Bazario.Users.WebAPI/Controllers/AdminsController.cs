@@ -1,7 +1,5 @@
 ﻿using Bazario.AspNetCore.Shared.Abstractions.Messaging;
 using Bazario.AspNetCore.Shared.Api.Factories;
-using Bazario.AspNetCore.Shared.Authorization.Attributes;
-using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.Users.Application.UseCases.Users.Commands.BanAdmin;
 using Bazario.Users.Application.UseCases.Users.Commands.DeleteAdmin;
 using Bazario.Users.Application.UseCases.Users.DTO;
@@ -20,7 +18,6 @@ namespace Bazario.Users.WebAPI.Controllers
         #region Queries
 
 
-        [HasRole(Role.Owner)]
         [HttpGet]
         public async Task<IActionResult> GetAllAdmins(
             [FromServices] IQueryHandler<GetAllAdminsQuery, IEnumerable<UserResponse>> queryHandler,
@@ -33,7 +30,6 @@ namespace Bazario.Users.WebAPI.Controllers
             return queryResult.IsSuccess ? Ok(queryResult.Value) : problemDetailsFactory.GetProblemDetails(queryResult);
         }
 
-        [HasRole(Role.Owner)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetAdminById(
             [FromServices] IQueryHandler<GetAdminByIdQuery, UserResponse> queryHandler,
@@ -47,7 +43,6 @@ namespace Bazario.Users.WebAPI.Controllers
             return queryResult.IsSuccess ? Ok(queryResult.Value) : problemDetailsFactory.GetProblemDetails(queryResult);
         }
 
-        [HasRole(Role.Admin)]
         [HttpGet("current")]
         public async Task<IActionResult> GetCurrentAdmin(
             [FromServices] IQueryHandler<GetCurrentAdminQuery, UserResponse> queryHandler,
@@ -66,7 +61,6 @@ namespace Bazario.Users.WebAPI.Controllers
         #region Commands
 
 
-        [HasRole(Role.Owner)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAdmin(
             [FromServices] ICommandHandler<DeleteAdminCommand> commandHandler,
@@ -80,7 +74,6 @@ namespace Bazario.Users.WebAPI.Controllers
             return commandResult.IsSuccess ? NoContent() : problemDetailsFactory.GetProblemDetails(commandResult);
         }
 
-        [HasRole(Role.Owner)]
         [HttpPost("ban")]
         public async Task<IActionResult> BanAdmin(
             [FromServices] ICommandHandler<BanAdminCommand> commandHandler,
