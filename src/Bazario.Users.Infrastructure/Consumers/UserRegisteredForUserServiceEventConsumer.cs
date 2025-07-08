@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bazario.Users.Infrastructure.Consumers
 {
-    public sealed class UserRegisteredForUserServiceEventConsumer
+    internal sealed class UserRegisteredForUserServiceEventConsumer
         : IMessageConsumer<UserRegisteredForUserServiceEvent>
     {
         private readonly ICommandHandler<InsertUserCommand> _insertUserCommandHandler;
