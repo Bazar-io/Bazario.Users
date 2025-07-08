@@ -1,10 +1,9 @@
-﻿using Bazario.AspNetCore.Shared.Application.Mappers;
+﻿using Bazario.AspNetCore.Shared.Abstractions.Mappers;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.BirthDates;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.Emails;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.FirstNames;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.LastNames;
 using Bazario.AspNetCore.Shared.Domain.Common.Users.PhoneNumbers;
-using Bazario.AspNetCore.Shared.Domain.Common.Users.Roles;
 using Bazario.AspNetCore.Shared.Results;
 using Bazario.Users.Application.UseCases.Users.Commands.InsertUser;
 using Bazario.Users.Domain.Users;
