@@ -1,4 +1,6 @@
-﻿using Bazario.AspNetCore.Shared.Contracts.AdminRegistered;
+﻿using Bazario.AspNetCore.Shared.Abstractions.MessageBroker;
+using Bazario.AspNetCore.Shared.Contracts.AdminRegistered;
+using Bazario.AspNetCore.Shared.Contracts.UserDeleted;
 using Bazario.AspNetCore.Shared.Contracts.UserRegistered;
 using Bazario.AspNetCore.Shared.Infrastructure.MessageBroker.DependencyInjection;
 using Bazario.Users.Infrastructure.Consumers;
@@ -13,6 +15,8 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
         {
             services.AddMessageConsumer<UserRegisteredForUserServiceEvent, UserRegisteredForUserServiceEventConsumer>();
             services.AddMessageConsumer<AdminRegisteredForUserServiceEvent, AdminRegisteredForUserServiceEventConsumer>();
+            services.AddMessageConsumer<UserDeletedEvent, UserDeletedEventConsumer>(
+                exchangeType: MessageBrokerExchangeType.Fanout);
 
             return services;
         }
