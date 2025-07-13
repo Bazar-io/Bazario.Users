@@ -10,13 +10,16 @@ namespace Bazario.Users.Infrastructure.Extensions.DI
 {
     public static class MessageConsumersExtensions
     {
+        public const string ServiceIdentifier = "users-service";
+
         public static IServiceCollection AddMessageConsumers(
             this IServiceCollection services)
         {
             services.AddMessageConsumer<UserRegisteredForUserServiceEvent, UserRegisteredForUserServiceEventConsumer>();
             services.AddMessageConsumer<AdminRegisteredForUserServiceEvent, AdminRegisteredForUserServiceEventConsumer>();
             services.AddMessageConsumer<UserDeletedEvent, UserDeletedEventConsumer>(
-                exchangeType: MessageBrokerExchangeType.Fanout);
+                exchangeType: MessageBrokerExchangeType.Fanout,
+                ServiceIdentifier);
 
             return services;
         }
