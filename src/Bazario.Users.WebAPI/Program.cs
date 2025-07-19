@@ -1,11 +1,12 @@
 using Bazario.AspNetCore.Shared.Api.Factories.DependencyInjection;
+using Bazario.AspNetCore.Shared.Api.Logging.DependencyInjection;
 using Bazario.AspNetCore.Shared.Api.Middleware.DependencyInjection;
 using Bazario.AspNetCore.Shared.Authentication.DependencyInjection;
 using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
 using Bazario.Users.WebAPI.Extensions;
-using Bazario.Users.WebAPI.Filters;
+using Serilog;
 
 namespace Bazario.Users.WebAPI
 {
@@ -15,10 +16,7 @@ namespace Bazario.Users.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers(options =>
-            {
-                options.Filters.Add<RequestLoggingFilter>();
-            });
+            builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -29,6 +27,8 @@ namespace Bazario.Users.WebAPI
             builder.Services.ConfigureAuthentication();
 
             builder.Services.AddProblemDetailsFactory();
+
+            builder.Host.ConfigureSerilogFromConfiguration();
 
             var app = builder.Build();
 
@@ -41,6 +41,10 @@ namespace Bazario.Users.WebAPI
             }
 
             app.UseExceptionHandlingMiddleware();
+
+            app.UseRequestLogContextMiddleware();
+
+            app.UseSerilogRequestLogging();
 
             app.ApplyMigrations();
 
