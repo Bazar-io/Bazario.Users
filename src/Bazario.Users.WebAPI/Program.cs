@@ -6,6 +6,8 @@ using Bazario.Users.Application;
 using Bazario.Users.Infrastructure;
 using Bazario.Users.Infrastructure.Extensions;
 using Bazario.Users.WebAPI.Extensions;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 namespace Bazario.Users.WebAPI
@@ -51,6 +53,11 @@ namespace Bazario.Users.WebAPI
             app.UseAuthentication();
 
             app.MapControllers();
+
+            app.MapHealthChecks("_health", new HealthCheckOptions
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.Run();
         }

@@ -24,6 +24,8 @@ namespace Bazario.Users.Infrastructure
 
             services.ConfigureAppBackgroundJobs();
 
+            services.ConfigureAppHealthChecks();
+
             return services;
         }
     }
